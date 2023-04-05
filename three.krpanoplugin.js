@@ -29,8 +29,6 @@ function krpanoplugin() {
 
 		load_scripts( [ 'three.js', 'GLTFLoader.js' ], start );
 
-		
-
 	};
 
 	local.unloadplugin = function () {
@@ -106,9 +104,7 @@ function krpanoplugin() {
 		renderer = new THREE.WebGLRenderer( {
 			canvas: krpano.webGL.canvas,
 			context: krpano.webGL.context,
-			antialias : true
 		} );
-		renderer.outputEncoding = THREE.sRGBEncoding;
 		renderer.autoClear = false;
 		renderer.setPixelRatio( 1 ); // krpano handles the pixel ratio scaling
 		// restore the krpano WebGL settings (for correct krpano rendering)
@@ -146,130 +142,25 @@ function krpanoplugin() {
 
 		// }, 50 );
 
-		
-		// ------------------------------------------------------------------------------------------
-
-
-
-
-		// // Draco 로더를 생성합니다.
-		// const dracoLoader = new DRACOLoader();
-		// dracoLoader.setDecoderPath( 'assets/draco_decoder.js' ); // Draco 디코더 파일 경로를 설정합니다.
-
-		// // GLTF 로더를 생성합니다.
-		// const gltfLoader = new THREE.GLTFLoader();
-		// gltfLoader.setDRACOLoader( dracoLoader ); // GLTF 로더에 Draco 로더를 등록합니다.
-
-		// // glTF 파일을 로드합니다.
-		// gltfLoader.load( 'assets/model3d/test/test.gltf', ( gltf ) => {
-		// 	// 모델 로드가 완료되면 실행되는 콜백 함수입니다.
-
-		// 	// glTF 모델을 가져옵니다.
-		// 	const model = gltf.scene;
-
-		// 	// Draco 압축을 적용합니다.
-		// 	const dracoCompression = new DRACOExporter();
-		// 	const options = { method: 'MESH' }; // 압축 방법 설정 (MESH 또는 POINT_CLOUD)
-		// 	const compressedData = dracoCompression.parse( model, options );
-
-		// 	// 압축된 데이터를 JSON 문자열로 변환합니다.
-		// 	const jsonString = JSON.stringify( compressedData );
-
-		// 	scene.add( gltf.scene )
-
-		// 	// 압축된 데이터를 파일로 저장하거나, 네트워크를 통해 전송할 수 있습니다.
-		// 	// ...
-
-		// }, undefined, ( error ) => {
-		// 	console.error( error );
-		// } );
-
-		// gltfLoader.load( 'assets/model3d/test/test.gltf', ( gltf ) => {
-		// 	scene.add( gltf.scene )
-		// 	renderer.render(scene)
-
-		// let light = new THREE.DirectionalLight(0xffffff,1); //조명
-		// scene.add(light);
-
-		// Instantiate a loader
-
-
-		// function loadDracoFiles(onLoad) {
-
-		// 	var dracoLoader = new THREE.DRACOLoader();
-		  
-		// 	// DRACOLoader.js 파일을 로드
-		// 	krpano.loadjs("three/examples/jsm/libs/draco/DRACOLoader.js", function() {
-		  
-		// 	  // draco_decoder.js 파일을 로드
-		// 	  krpano.loadjs("three/examples/jsm/libs/draco/draco_decoder.js", function() {
-		  
-		// 		// draco_wasm_wrapper.js 파일을 로드
-		// 		krpano.loadjs("three/examples/jsm/libs/draco/draco_wasm_wrapper.js", function() {
-		  
-		// 		  // wasm_dec.js 파일을 로드
-		// 		  krpano.loadjs("three/examples/jsm/libs/draco/wasm_dec.js", function() {
-		  
-		// 			// DRACOLoader.js 파일이 로드되었을 때 호출되는 함수
-		// 			dracoLoader.setDecoderPath("three/examples/jsm/libs/draco/");
-		// 			onLoad(dracoLoader);
-		  
-		// 		  });
-		  
-		// 		});
-		  
-		// 	  });
-		  
-		// 	});
-		  
-		//   }
-
-
-		// 	// glTF 모델 로드
-		// 	var loader = new THREE.GLTFLoader();
-		// 	loader.load('assets/model3d/test/test.gltf', function (gltf) {
-
-
-		// 	// Draco로 압축된 glTF 파일로 다시 저장
-		// 	var options = {
-		// 		compressionLevel: 7 // 압축 레벨
-		// 	};
-		// 	var dracoBufferGeometry = THREE.DRACOExporter.encodeDracoBufferGeometry(gltf.scene.children[0].geometry, dracoLoader, options);
-		// 	var dracoGeometry = new THREE.BufferGeometry().fromBufferGeometry(dracoBufferGeometry);
-
-		// 	// 압축된 glTF 파일을 로드
-		// 	loader.parse(JSON.stringify({
-		// 		scene: gltf.scene,
-		// 		geometries: [dracoGeometry]
-		// 	}), '', function (gltf) {
-
-		// 		// krpano의 3D View에 glTF 모델 추가
-		// 		view.add(gltf.scene, function () {
-
-		// 			// glTF 모델이 로드되었을 때 호출되는 함수
-
-		// 		});
-
-		// 	}, null, function (error) {
-		// 		console.error(error);
-		// 	});
-
-		// });
-
-		// // krpano에 3D View 추가
-		// krpano.addplugin(view);
-
-		// // glTF 모델을 실행하는 함수
-		// function runGltf() {
-		// 	krpano.call("gltf-view.show();");
-		// }
 
 		const gltfLoader = new THREE.GLTFLoader();
-		gltfLoader.load( 'assets/model3d/0405_8k_all/23A_05_8k.gltf', ( gltf ) => {
+		gltfLoader.load( 'assets/model3d/23A_NODP.glb', ( gltf ) => {
 
+			// assign_object_properties( gltf.scene, 'gltf', {
+			// 	ath: - 30,
+			// 	atv: 22,
+				// depth: 500,
+			// 	scale: 50.0,
+			// 	rx: 180,
+			// 	ry: 0,
+			// 	rz: 0
+			// } );
 			scene.add( gltf.scene );
 
 		} );
+
+		// let light = new THREE.DirectionalLight(0xffffff,1); //조명
+		// scene.add(light);
 
 		const light = new THREE.AmbientLight( 0x404040,4 ); // soft white light
 		scene.add( light );
@@ -279,7 +170,6 @@ function krpanoplugin() {
 		restore_krpano_WebGL_state();
 
 	}
-
 
 	function restore_krpano_WebGL_state() {
 
@@ -380,7 +270,7 @@ function krpanoplugin() {
 
 	}
 
-	function assign_object_properties( gltf, name, properties ) {
+	function assign_object_properties( obj, name, properties ) {
 
 		// set defaults (krpano hotspot like properties)
 		if ( properties === undefined ) properties = {};
@@ -402,23 +292,23 @@ function krpanoplugin() {
 		if ( properties.onclick === undefined ) properties.onclick = null;
 		properties.pressed = false;
 		properties.hovering = false;
-		gltf.properties = properties;
-		update_object_properties( gltf );
+		obj.properties = properties;
+		update_object_properties( obj );
 
 	}
 
-	function update_object_properties( gltf ) {
+	function update_object_properties( obj ) {
 
-		var p = gltf.properties;
+		var p = obj.properties;
 		var px =
       p.depth * Math.cos( p.atv * M_RAD ) * Math.cos( ( 180 - p.ath ) * M_RAD );
 		var py = p.depth * Math.sin( p.atv * M_RAD );
 		var pz =
       p.depth * Math.cos( p.atv * M_RAD ) * Math.sin( ( 180 - p.ath ) * M_RAD );
-		gltf.position.set( px, py, pz );
-		gltf.rotation.set( p.rx * M_RAD, p.ry * M_RAD, p.rz * M_RAD, p.rorder );
-		gltf.scale.set( p.scale, p.scale, p.scale );
-		gltf.updateMatrix();
+		obj.position.set( px, py, pz );
+		obj.rotation.set( p.rx * M_RAD, p.ry * M_RAD, p.rz * M_RAD, p.rorder );
+		obj.scale.set( p.scale, p.scale, p.scale );
+		obj.updateMatrix();
 
 	}
 
